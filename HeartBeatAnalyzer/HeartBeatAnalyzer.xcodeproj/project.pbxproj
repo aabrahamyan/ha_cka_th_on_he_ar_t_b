@@ -183,11 +183,8 @@
 		2CE8F09C17E2E779002D3FE7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				2C216D3B17E3A6E700F2664A /* history_bg@2x.png */,
-=======
 				5AC1B2DA17E3A728008154A5 /* menuImages */,
->>>>>>> 5065078d621ba14f27f6f37e7b6b3f7debd1143a
 				5AC1B27C17E334A4008154A5 /* heartImages */,
 				5AC1B27A17E32D42008154A5 /* ProximaNova-Light.otf */,
 				5AC1B27817E32690008154A5 /* finger_big_info@2x.png */,
@@ -305,15 +302,13 @@
 				5AC1B2CF17E33DCA008154A5 /* 10.png in Resources */,
 				5AC1B2D017E33DCA008154A5 /* 11.png in Resources */,
 				5AC1B2D217E33E08008154A5 /* 1.png in Resources */,
-<<<<<<< HEAD
 				2C216D3C17E3A6E700F2664A /* history_bg@2x.png in Resources */,
-=======
 				5AC1B2DF17E3A771008154A5 /* burger@2x.png in Resources */,
 				5AC1B2E717E3AB63008154A5 /* profile@2x.png in Resources */,
 				5AC1B2F417E3B8EC008154A5 /* gear@2x.png in Resources */,
 				5AC1B2F517E3B8EC008154A5 /* star@2x.png in Resources */,
 				5AC1B2F717E3B8FB008154A5 /* globe@2x.png in Resources */,
->>>>>>> 5065078d621ba14f27f6f37e7b6b3f7debd1143a
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,12 +324,9 @@
 				2CE8F0BE17E2E7EB002D3FE7 /* SampleHeartRateAppViewController.m in Sources */,
 				2CE8F0BF17E2E7EB002D3FE7 /* SimpleChart.m in Sources */,
 				5AC1B26D17E309E9008154A5 /* HelpView.m in Sources */,
-<<<<<<< HEAD
 				2C216D3F17E3A91100F2664A /* HistoryTableViewCell.m in Sources */,
 				2C216D4217E3A93800F2664A /* HistoryTBViewController.m in Sources */,
-=======
 				5AC1B2E517E3A7BD008154A5 /* RNFrostedSidebar.m in Sources */,
->>>>>>> 5065078d621ba14f27f6f37e7b6b3f7debd1143a
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
