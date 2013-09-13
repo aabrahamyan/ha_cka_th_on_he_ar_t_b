@@ -39,6 +39,13 @@
 		5AC1B2D017E33DCA008154A5 /* 11.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1B2C617E33DCA008154A5 /* 11.png */; };
 		5AC1B2D217E33E08008154A5 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1B2D117E33E08008154A5 /* 1.png */; };
 		5AC1B2D717E34CFA008154A5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AC1B2D617E34CFA008154A5 /* QuartzCore.framework */; };
+		5AC1B2D917E3A623008154A5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AC1B2D817E3A623008154A5 /* Accelerate.framework */; };
+		5AC1B2DF17E3A771008154A5 /* burger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1B2DB17E3A771008154A5 /* burger@2x.png */; };
+		5AC1B2E017E3A771008154A5 /* gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1B2DC17E3A771008154A5 /* gear@2x.png */; };
+		5AC1B2E117E3A771008154A5 /* globe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1B2DD17E3A771008154A5 /* globe@2x.png */; };
+		5AC1B2E217E3A771008154A5 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1B2DE17E3A771008154A5 /* star@2x.png */; };
+		5AC1B2E517E3A7BD008154A5 /* RNFrostedSidebar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1B2E417E3A7BD008154A5 /* RNFrostedSidebar.m */; };
+		5AC1B2E717E3AB63008154A5 /* profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1B2E617E3AB63008154A5 /* profile@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +88,14 @@
 		5AC1B2C617E33DCA008154A5 /* 11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 11.png; sourceTree = "<group>"; };
 		5AC1B2D117E33E08008154A5 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		5AC1B2D617E34CFA008154A5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		5AC1B2D817E3A623008154A5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		5AC1B2DB17E3A771008154A5 /* burger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "burger@2x.png"; sourceTree = "<group>"; };
+		5AC1B2DC17E3A771008154A5 /* gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear@2x.png"; sourceTree = "<group>"; };
+		5AC1B2DD17E3A771008154A5 /* globe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "globe@2x.png"; sourceTree = "<group>"; };
+		5AC1B2DE17E3A771008154A5 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
+		5AC1B2E317E3A7BC008154A5 /* RNFrostedSidebar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFrostedSidebar.h; sourceTree = "<group>"; };
+		5AC1B2E417E3A7BD008154A5 /* RNFrostedSidebar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFrostedSidebar.m; sourceTree = "<group>"; };
+		5AC1B2E617E3AB63008154A5 /* profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AC1B2D917E3A623008154A5 /* Accelerate.framework in Frameworks */,
 				5AC1B2D717E34CFA008154A5 /* QuartzCore.framework in Frameworks */,
 				2CE8F0C517E2E893002D3FE7 /* CoreVideo.framework in Frameworks */,
 				2CE8F0C317E2E889002D3FE7 /* CoreMedia.framework in Frameworks */,
@@ -104,6 +120,7 @@
 		2CE8F08917E2E779002D3FE7 = {
 			isa = PBXGroup;
 			children = (
+				5AC1B2D817E3A623008154A5 /* Accelerate.framework */,
 				2CE8F09B17E2E779002D3FE7 /* HeartBeatAnalyzer */,
 				2CE8F09417E2E779002D3FE7 /* Frameworks */,
 				2CE8F09317E2E779002D3FE7 /* Products */,
@@ -142,6 +159,8 @@
 				2CE8F0BD17E2E7EB002D3FE7 /* SimpleChart.m */,
 				5AC1B26B17E309E9008154A5 /* HelpView.h */,
 				5AC1B26C17E309E9008154A5 /* HelpView.m */,
+				5AC1B2E317E3A7BC008154A5 /* RNFrostedSidebar.h */,
+				5AC1B2E417E3A7BD008154A5 /* RNFrostedSidebar.m */,
 				2CE8F0A417E2E779002D3FE7 /* AppDelegate.h */,
 				2CE8F0A517E2E779002D3FE7 /* AppDelegate.m */,
 				2CE8F09C17E2E779002D3FE7 /* Supporting Files */,
@@ -152,6 +171,7 @@
 		2CE8F09C17E2E779002D3FE7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5AC1B2DA17E3A728008154A5 /* menuImages */,
 				5AC1B27C17E334A4008154A5 /* heartImages */,
 				5AC1B27A17E32D42008154A5 /* ProximaNova-Light.otf */,
 				5AC1B27817E32690008154A5 /* finger_big_info@2x.png */,
@@ -184,6 +204,18 @@
 				5AC1B2C617E33DCA008154A5 /* 11.png */,
 			);
 			name = heartImages;
+			sourceTree = "<group>";
+		};
+		5AC1B2DA17E3A728008154A5 /* menuImages */ = {
+			isa = PBXGroup;
+			children = (
+				5AC1B2DB17E3A771008154A5 /* burger@2x.png */,
+				5AC1B2DC17E3A771008154A5 /* gear@2x.png */,
+				5AC1B2DD17E3A771008154A5 /* globe@2x.png */,
+				5AC1B2DE17E3A771008154A5 /* star@2x.png */,
+				5AC1B2E617E3AB63008154A5 /* profile@2x.png */,
+			);
+			name = menuImages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +289,11 @@
 				5AC1B2CF17E33DCA008154A5 /* 10.png in Resources */,
 				5AC1B2D017E33DCA008154A5 /* 11.png in Resources */,
 				5AC1B2D217E33E08008154A5 /* 1.png in Resources */,
+				5AC1B2DF17E3A771008154A5 /* burger@2x.png in Resources */,
+				5AC1B2E017E3A771008154A5 /* gear@2x.png in Resources */,
+				5AC1B2E117E3A771008154A5 /* globe@2x.png in Resources */,
+				5AC1B2E217E3A771008154A5 /* star@2x.png in Resources */,
+				5AC1B2E717E3AB63008154A5 /* profile@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +309,7 @@
 				2CE8F0BE17E2E7EB002D3FE7 /* SampleHeartRateAppViewController.m in Sources */,
 				2CE8F0BF17E2E7EB002D3FE7 /* SimpleChart.m in Sources */,
 				5AC1B26D17E309E9008154A5 /* HelpView.m in Sources */,
+				5AC1B2E517E3A7BD008154A5 /* RNFrostedSidebar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

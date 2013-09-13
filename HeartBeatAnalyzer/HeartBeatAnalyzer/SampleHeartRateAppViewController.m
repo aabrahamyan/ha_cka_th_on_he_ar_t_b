@@ -12,6 +12,10 @@
 
 #define HEART_ANIMATION 0.7
 
+@interface SampleHeartRateAppViewController ()
+@property (nonatomic, strong) NSMutableIndexSet *optionIndices;
+@end
+
 @implementation SampleHeartRateAppViewController {
     UILabel *bpmCount;
     UIImageView *heartImageView;
@@ -43,6 +47,9 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
+    
+    self.optionIndices = [NSMutableIndexSet indexSetWithIndex:1];
+    
     heartCounter = 1;
     previousHue = 0;
     timerTimes = 1;
@@ -142,7 +149,14 @@
     [self.view.layer addSublayer:circle];
     
 
-   
+    
+    // ----------------------------- BackGround ImageView --------------------------
+    UIButton *menuBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, 25, 25)];
+    [menuBtn addTarget:self  action:@selector(onBurger:) forControlEvents:UIControlEventTouchDown];
+    menuBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+    [menuBtn setBackgroundImage:[UIImage imageNamed:@"burger.png"]  forState:UIControlStateNormal];
+    
+    [self.view addSubview:menuBtn];
     
     
     /*double p1 = 7.5;
@@ -440,6 +454,60 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v ) {
     //heartRateLabel.text = [NSString stringWithFormat:@"%d", heartCounter];
 }
 
+- (void)onBurger:(id)sender {
+    NSArray *images = @[
+                        [UIImage imageNamed:@"gear"],
+                        [UIImage imageNamed:@"globe"],
+                        [UIImage imageNamed:@"profile"],
+                        [UIImage imageNamed:@"star"],
+                        [UIImage imageNamed:@"gear"],
+                        [UIImage imageNamed:@"globe"],
+                        [UIImage imageNamed:@"profile"],
+                        [UIImage imageNamed:@"star"],
+                        [UIImage imageNamed:@"gear"],
+                        [UIImage imageNamed:@"globe"],
+                        [UIImage imageNamed:@"profile"],
+                        [UIImage imageNamed:@"star"],
+                        ];
+    NSArray *colors = @[
+                        [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
+                        [UIColor colorWithRed:255/255.f green:137/255.f blue:167/255.f alpha:1],
+                        [UIColor colorWithRed:126/255.f green:242/255.f blue:195/255.f alpha:1],
+                        [UIColor colorWithRed:119/255.f green:152/255.f blue:255/255.f alpha:1],
+                        [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
+                        [UIColor colorWithRed:255/255.f green:137/255.f blue:167/255.f alpha:1],
+                        [UIColor colorWithRed:126/255.f green:242/255.f blue:195/255.f alpha:1],
+                        [UIColor colorWithRed:119/255.f green:152/255.f blue:255/255.f alpha:1],
+                        [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
+                        [UIColor colorWithRed:255/255.f green:137/255.f blue:167/255.f alpha:1],
+                        [UIColor colorWithRed:126/255.f green:242/255.f blue:195/255.f alpha:1],
+                        [UIColor colorWithRed:119/255.f green:152/255.f blue:255/255.f alpha:1],
+                        ];
+    
+    RNFrostedSidebar *callout = [[RNFrostedSidebar alloc] initWithImages:images selectedIndices:self.optionIndices borderColors:colors];
+    //    RNFrostedSidebar *callout = [[RNFrostedSidebar alloc] initWithImages:images];
+    callout.delegate = self;
+    //    callout.showFromRight = YES;
+    [callout show];
+}
+
+#pragma mark - RNFrostedSidebarDelegate
+
+- (void)sidebar:(RNFrostedSidebar *)sidebar didTapItemAtIndex:(NSUInteger)index {
+    NSLog(@"Tapped item at index %i",index);
+    if (index == 3) {
+        [sidebar dismiss];
+    }
+}
+
+- (void)sidebar:(RNFrostedSidebar *)sidebar didEnable:(BOOL)itemEnabled itemAtIndex:(NSUInteger)index {
+    if (itemEnabled) {
+        [self.optionIndices addIndex:index];
+    }
+    else {
+        [self.optionIndices removeIndex:index];
+    }
+}
 
 
 /*
