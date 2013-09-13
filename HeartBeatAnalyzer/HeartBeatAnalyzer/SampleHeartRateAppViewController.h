@@ -14,7 +14,20 @@
 @interface SampleHeartRateAppViewController : UIViewController<AVCaptureVideoDataOutputSampleBufferDelegate> {
 	AVCaptureSession *session;
 	SimpleChart *simpleChart;
+    float previousHueDiff;
+    float previousHue;
     NSInteger imageIndex;
+    UILabel * heartRateLabel;
+    NSInteger heartCounter;
+    NSTimer * timer;
+    NSInteger timerTimes;
+    BOOL timerDone;
+    NSInteger globalCounter;
+    CGFloat circleAnimationCounter;
+    
+    //------- Peak Detection ---------//
+    float previousSlope;
+    NSArray * arrs;
     
 }
 

@@ -43,7 +43,14 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    heartCounter = 1;
+    previousHue = 0;
+    timerTimes = 1;
+    timerDone = NO;
+    globalCounter = 1;
+    previousSlope = 0;
+    
+    circleAnimationCounter = 0;
     
     // ----------------------------- BackGround ImageView --------------------------
     UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 548)];
@@ -137,26 +144,26 @@
    
     
     
-    double p1 = 7.5;
+    /*double p1 = 7.5;
     dispatch_time_t progress1 = dispatch_time(DISPATCH_TIME_NOW, p1 * NSEC_PER_SEC);
     dispatch_after(progress1, dispatch_get_main_queue(), ^(void){
          [self setProgressFrom:0.0 to:0.4 andDuration:4.0];
          
-    });
+    });*/
     
-    double p2 = 12;
+    /*double p2 = 12;
     dispatch_time_t progress2 = dispatch_time(DISPATCH_TIME_NOW, p2 * NSEC_PER_SEC);
     dispatch_after(progress2, dispatch_get_main_queue(), ^(void){
         [self setProgressFrom:0.4 to:1.0 andDuration:6.0];
-    });
+    }); */
     
     
     // ----------------------------- HELP VIEW --------------------------
     HelpView *helpView = [[HelpView alloc] initWithFrame: CGRectMake(0, 0, 320, 548)];
-    [self.view addSubview: helpView];
+    //[self.view addSubview: helpView];
     
     //--------------------------------------------------- TODO: TEST HIDE
-    double delayInSeconds = 6.5;
+/*    double delayInSeconds = 6.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [helpView hideHelpView];
@@ -168,9 +175,8 @@
     dispatch_time_t popTime2 = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds2 * NSEC_PER_SEC);
     dispatch_after(popTime2, dispatch_get_main_queue(), ^(void){
         // [helpView showHelpView];
-    });
-    //---------------------------------------------------
-    
+    });*/
+    //---------------------------------------------------    
     
     
     imageIndex = 0;
@@ -213,7 +219,7 @@
 															 nil];
 	videoOutput.minFrameDuration=CMTimeMake(1, 10);
 	// and the size of the frames we want
-	[session setSessionPreset:AVCaptureSessionPreset640x480];
+	[session setSessionPreset:AVCaptureSessionPresetLow];
 	
 	// Add the input and output
 	[session addInput:cameraInput];
@@ -223,17 +229,19 @@
 	[session startRunning];		
 }
 
-- (void)setProgressFrom: (float)from to: (float)to andDuration: (float)time {
+- (void)setProgressFrom {
     
     // Configure animation
     CABasicAnimation *drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    drawAnimation.duration            = time; // "animate over 10 seconds or so.."
+
+    drawAnimation.duration            = 1.0; // "animate over 10 seconds or so.."
     drawAnimation.repeatCount         = 1.0;  // Animate only once..
     drawAnimation.removedOnCompletion = NO;   // Remain stroked after the animation..
     
     // Animate from no part of the stroke being drawn to the entire stroke being drawn
-    drawAnimation.fromValue = [NSNumber numberWithFloat:from];
-    drawAnimation.toValue   = [NSNumber numberWithFloat:to];
+    drawAnimation.fromValue = [NSNumber numberWithFloat:circleAnimationCounter];
+    circleAnimationCounter += 0.05;
+    drawAnimation.toValue   = [NSNumber numberWithFloat:circleAnimationCounter];
     
     // Experiment with timing to get the appearence to look the way you want
     drawAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
@@ -241,7 +249,7 @@
     circle.fillColor = [UIColor clearColor].CGColor;
     circle.strokeColor = [UIColor redColor].CGColor;
     
-    circle.strokeEnd = to;
+    circle.strokeEnd = circleAnimationCounter;
     
     // Add the animation to the circle
     [circle addAnimation:drawAnimation forKey:@"drawCircleAnimation"];
@@ -303,17 +311,11 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v ) {
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
-        
-    
 	static int count=0;
 	count++;
 	// only run if we're not already processing an image
 	// this is the image buffer
 	CVImageBufferRef cvimgRef = CMSampleBufferGetImageBuffer(sampleBuffer);
-    
-
-    
-    
 	// Lock the image buffer
 	CVPixelBufferLockBaseAddress(cvimgRef,0);
 	// access the data
@@ -323,21 +325,7 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v ) {
 	uint8_t *buf=(uint8_t *) CVPixelBufferGetBaseAddress(cvimgRef);
 	size_t bprow=CVPixelBufferGetBytesPerRow(cvimgRef);
     
-    /*********************** CONVERTING/SAVING IMAGE ***************************/
-    /*Create a CGImageRef from the CVImageBufferRef*/
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef newContext = CGBitmapContextCreate(buf, width, height, 8, bprow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-    CGImageRef newImage = CGBitmapContextCreateImage(newContext);
-    
-    /*We release some components*/
-    CGContextRelease(newContext);
-    CGColorSpaceRelease(colorSpace);
-    
-    UIImage *image= [UIImage imageWithCGImage:newImage scale:1.0 orientation:UIImageOrientationRight];
-           
-    /*********************** CONVERTING/SAVING IMAGE ***************************/
-    
-    
+   
     
 	float r=0,g=0,b=0;
 	for(int y=0; y<height; y++) {
@@ -352,63 +340,103 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v ) {
 	r/=255*(float) (width*height);
 	g/=255*(float) (width*height);
 	b/=255*(float) (width*height);
-
+    
 	float h,s,v;
 	
 	RGBtoHSV(r, g, b, &h, &s, &v);
-	        
-    if(s >= 0.8999 && s <= 1.0000) {
     
+    
+    if(s >= 0.8999 && s <= 1.0000) {
+        
         // simple highpass and lowpass filter - do not use this for anything important, it's rubbish...
         static float lastH=0;
-        static float lastSat = 0;
-        static float lastVal = 0;
-
         float highPassValue=h-lastH;
-        float satDifference = s - lastSat;
-        float valDifference = v - lastVal;
-    
-        image = [self drawText:[@"" stringByAppendingFormat:@"HUE = %f, SAT=%f, VAL=%f, HUE_DIFF=%f, SAT_DIFF=%f, VAL_DIFF=%f", h, s, v,highPassValue,satDifference,valDifference] inImage:image atPoint:CGPointMake(10, 10)];
-    
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        NSString *docs = [paths objectAtIndex:0];
-        NSString* path =  [docs stringByAppendingFormat:@"/image_%d.jpg",imageIndex];
-    
-        NSData* imageData = [NSData dataWithData:UIImageJPEGRepresentation(image, 1.0)];
-    
-    
-        NSError *writeError = nil;
-        [imageData writeToFile:path options:NSDataWritingAtomic error:&writeError];
-    
-        if(writeError!=nil) {
-            NSLog(@"%@: Error saving image: %@", [self class], [writeError localizedDescription]);
-        }
-
-    
         lastH=h;
-        lastSat = s;
-        lastVal = v;
         float lastHighPassValue=0;
-        float lowPassValue=(lastHighPassValue+highPassValue)/2;
+        float lowPassValue=(lastHighPassValue+highPassValue) / 2;
         lastHighPassValue=highPassValue;
-
-
-        // send the point to the chart to be displayed
-        //	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
-        @autoreleasepool {
-            [simpleChart performSelectorOnMainThread:@selector(addPoint:) withObject:[NSNumber numberWithFloat:lowPassValue] waitUntilDone:NO];
+        
+        if(lowPassValue <= 0) {
+            if(lowPassValue <= previousHue) {
+                // send the point to the chart to be displayed
+                @autoreleasepool {
+                    
+                    //NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+                    [simpleChart performSelectorOnMainThread:@selector(addPoint:) withObject:[NSNumber numberWithFloat:0] waitUntilDone:NO];
+                }
+                
+            } else {
+                [self performSelectorOnMainThread:@selector(startTimer) withObject:nil waitUntilDone:NO];
+                
+                //NSLog(@"lowPassValue = = %f", lowPassValue);
+                // send the point to the chart to be displayed
+                @autoreleasepool {
+                    [simpleChart performSelectorOnMainThread:@selector(addPoint:) withObject:[NSNumber numberWithFloat:-0.2] waitUntilDone:NO];
+                }
+                
+                [self performSelectorOnMainThread:@selector(incrementHeartBAndApply) withObject:nil waitUntilDone:NO];
+            }
+        } else {
+            @autoreleasepool {
+                // send the point to the chart to be displayed                
+                [simpleChart performSelectorOnMainThread:@selector(addPoint:) withObject:[NSNumber numberWithFloat:0] waitUntilDone:NO];
+            } 
         }
-	
-
-    
+        
+        previousHue = lowPassValue;
+        
         imageIndex++;
+        globalCounter++;
+        NSLog(@"HAP");
+    } else {
+        NSLog(@"INVALIDATED = %@",timer);
+        [timer invalidate];
+        timer = nil;
+        timerDone = YES;
     }
-
-
 }
 
 
+- (void) startTimer {
+    if(!timer) {
+        timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updatePulse) userInfo:nil repeats:YES];
+    }
+}
 
+- (void) updatePulse {
+    if(timerTimes == 21) {
+        [timer invalidate];
+        timer = nil;
+        timerDone = YES;
+        
+        return;
+    }
+    
+    if(heartCounter > 1) {
+        [self setProgressFrom];
+    }
+    
+    if(timerTimes >= 10) {
+        int x = (60 * heartCounter) / timerTimes;
+        heartRateLabel.text = [NSString stringWithFormat:@"%d", x];
+    }
+    
+    timerTimes++;
+    
+}
+
+/*
+ // Override to allow orientations other than the default portrait orientation.
+ - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+ // Return YES for supported orientations
+ return (interfaceOrientation == UIInterfaceOrientationPortrait);
+ }
+ */
+
+- (void) incrementHeartBAndApply {
+    heartCounter++;
+    //heartRateLabel.text = [NSString stringWithFormat:@"%d", heartCounter];
+}
 
 
 
