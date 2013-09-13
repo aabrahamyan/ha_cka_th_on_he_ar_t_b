@@ -7,6 +7,7 @@
 //
 
 #import "HistoryTBViewController.h"
+#import "HistoryTableViewCell.h"
 
 @interface HistoryTBViewController ()
 
@@ -18,21 +19,40 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+}
 
+- (void) loadView {
+    [super loadView];
+    
     UIImageView * bgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"history_bg.png"]];
     self.view.backgroundColor = [UIColor clearColor];
     self.view.userInteractionEnabled = YES;
+    //[self.view addSubview:bgView];
+    self.tableView.delegate = self;
+    NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
+    [DateFormatter setDateFormat:@"EEE, dd MMM YYYY HH:mm:ss"];
+    //NSLog(@"%@",[DateFormatter stringFromDate:[NSDate date]]);
     
-    self.view = bgView;
+    
+    NSArray * arr = [NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"93", @"rate_result", [DateFormatter stringFromDate:[NSDate date]], @"date", @"Possible tachycardia. Double check with Doctor !", @"dcease", nil]];
+    [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"heart_beats"];
+    
+    
+    data = [[NSUserDefaults standardUserDefaults] objectForKey:@"heart_beats"];
+    
+    //NSLog(@"BZZ");
+    
+
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -42,28 +62,34 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+    return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+    return [data count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    HistoryTableViewCell *cell = (HistoryTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    // Configure the cell...
+    NSDictionary * currentDictionary = (NSDictionary *) [data objectAtIndex:indexPath.row];
     
+    if(cell == nil) {
+        cell = [[HistoryTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        [cell constructStructure];
+    }
+    
+    [cell constructData:currentDictionary]; 
+       
     return cell;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 56.0f;
 }
 
 /*

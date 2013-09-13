@@ -10,6 +10,7 @@
 #import "SimpleChart.h"
 #import "HelpView.h"
 #import "SoundUtil.h"
+#import "HistoryTBViewController.h"
 
 #define HEART_ANIMATION 0.7
 
@@ -152,7 +153,8 @@
     [self.view.layer addSublayer:circle];
     
     // ----------------------------- Menu ImageView --------------------------
-    UIButton *menuBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, 25, 25)];
+    
+    UIButton *menuBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];
     [menuBtn addTarget:self  action:@selector(onBurger:) forControlEvents:UIControlEventTouchDown];
     menuBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
     [menuBtn setBackgroundImage:[UIImage imageNamed:@"burger.png"]  forState:UIControlStateNormal];
@@ -190,11 +192,7 @@
     }); */
     
     
-    // ----------------------------- HELP VIEW --------------------------
-    HelpView *helpView = [[HelpView alloc] initWithFrame: CGRectMake(0, 0, 320, 548)];
-    //[self.view addSubview: helpView];
     
-    //--------------------------------------------------- TODO: TEST HIDE
 /*    double delayInSeconds = 6.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -488,18 +486,16 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v ) {
 }
 
 - (void)onBurger:(id)sender {
-    NSArray *images = @[
-                        [UIImage imageNamed:@"gear"],
-                        [UIImage imageNamed:@"globe"],
-                        [UIImage imageNamed:@"profile"],
-                        [UIImage imageNamed:@"star"],
+    NSArray *images = @[[UIImage imageNamed:@"ico_home"],
+                        [UIImage imageNamed:@"ico_history"],
+                        [UIImage imageNamed:@"ico_help"],
+                        
   
                         ];
     NSArray *colors = @[
                         [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
                         [UIColor colorWithRed:255/255.f green:137/255.f blue:167/255.f alpha:1],
-                        [UIColor colorWithRed:126/255.f green:242/255.f blue:195/255.f alpha:1],
-                        [UIColor colorWithRed:119/255.f green:152/255.f blue:255/255.f alpha:1],
+                        [UIColor colorWithRed:126/255.f green:242/255.f blue:195/255.f alpha:1],                        
       
                         ];
     
@@ -513,10 +509,38 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v ) {
 #pragma mark - RNFrostedSidebarDelegate
 
 - (void)sidebar:(RNFrostedSidebar *)sidebar didTapItemAtIndex:(NSUInteger)index {
-    NSLog(@"Tapped item at index %i",index);
-    if (index == 3) {
+    //NSLog(@"Tapped item at index %i",index);
+    if (index == 0) {
+        
+    } else if (index == 1) {
+        [sidebar dismiss];
+        historyTBVC = [[HistoryTBViewController alloc] initWithStyle:UITableViewStylePlain];
+        historyTBVC.view.frame = CGRectMake(0, 0, 278, 480);
+        
+        [historyTBVC setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+       
+        [self presentViewController:historyTBVC animated:YES completion:^{
+            [historyTBVC.tableView reloadData];
+        }];
+        
+    } else if (index == 2) {
+        // ----------------------------- HELP VIEW --------------------------
+        [sidebar dismiss];
+        HelpView *helpView = [[HelpView alloc] initWithFrame: CGRectMake(0, 0, 320, 548)];
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeHelp:)];
+        [helpView addGestureRecognizer:tap];
+        [self.view addSubview:helpView];
+        [helpView showHelpView];
+        //--------------------------------------------------- TODO: TEST HIDE
+    } else if (index == 3) {
         [sidebar dismiss];
     }
+}
+
+- (void) closeHelp: (UIGestureRecognizer *) recognizer {
+
+        HelpView * helpView = (HelpView *)[recognizer view];
+        [helpView hideHelpView];
 }
 
 - (void)sidebar:(RNFrostedSidebar *)sidebar didEnable:(BOOL)itemEnabled itemAtIndex:(NSUInteger)index {

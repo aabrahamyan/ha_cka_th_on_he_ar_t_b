@@ -11,6 +11,7 @@
 #import "RNFrostedSidebar.h"
 
 @class SimpleChart;
+@class HistoryTBViewController;
 
 @interface SampleHeartRateAppViewController : UIViewController<AVCaptureVideoDataOutputSampleBufferDelegate, RNFrostedSidebarDelegate> {
 	AVCaptureSession *session;
@@ -29,6 +30,7 @@
     //------- Peak Detection ---------//
     float previousSlope;
     NSArray * arrs;
+    HistoryTBViewController * historyTBVC;
     
 }
 

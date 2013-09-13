@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HistoryTableViewCell : UITableViewCell
+@interface HistoryTableViewCell : UITableViewCell<UITableViewDelegate> {
+    UILabel * rateLabel;
+    UILabel * dateLabel;
+    UILabel * deceaseLabel;
+}
+
+- (void) constructStructure;
+- (void) constructData: (NSDictionary *) dic;
 
 @end
