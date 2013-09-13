@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "SampleHeartRateAppViewController.h" 
+#import "HistoryTBViewController.h"
 
 @implementation AppDelegate
 
@@ -17,7 +18,11 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.viewController = [[SampleHeartRateAppViewController alloc] init];
-    self.window.rootViewController = self.viewController;
+    
+    HistoryTBViewController * tb = [[HistoryTBViewController alloc] initWithStyle:UITableViewStylePlain];
+    //self.window.rootViewController = self.viewController;
+    self.window.rootViewController = tb; 
+
     [self.window makeKeyAndVisible];
     return YES;
 }
