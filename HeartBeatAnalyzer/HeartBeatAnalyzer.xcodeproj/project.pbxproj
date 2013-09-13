@@ -49,6 +49,11 @@
 		5AC1B2F417E3B8EC008154A5 /* gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1B2F217E3B8EC008154A5 /* gear@2x.png */; };
 		5AC1B2F517E3B8EC008154A5 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1B2F317E3B8EC008154A5 /* star@2x.png */; };
 		5AC1B2F717E3B8FB008154A5 /* globe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1B2F617E3B8FB008154A5 /* globe@2x.png */; };
+		5AC1B30217E3C10A008154A5 /* beat.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1B30117E3C10A008154A5 /* beat.aif */; };
+		5AC1B30517E3C11A008154A5 /* SoundUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1B30417E3C11A008154A5 /* SoundUtil.m */; };
+		5AC1B30717E3C133008154A5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AC1B30617E3C133008154A5 /* AudioToolbox.framework */; };
+		5AC1B30917E3C20B008154A5 /* countdown.aif in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1B30817E3C20B008154A5 /* countdown.aif */; };
+		5AC1B30B17E3C39B008154A5 /* beep-old1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1B30A17E3C39B008154A5 /* beep-old1.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +109,12 @@
 		5AC1B2F217E3B8EC008154A5 /* gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear@2x.png"; sourceTree = "<group>"; };
 		5AC1B2F317E3B8EC008154A5 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		5AC1B2F617E3B8FB008154A5 /* globe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "globe@2x.png"; sourceTree = "<group>"; };
+		5AC1B30117E3C10A008154A5 /* beat.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = beat.aif; sourceTree = "<group>"; };
+		5AC1B30317E3C11A008154A5 /* SoundUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundUtil.h; sourceTree = "<group>"; };
+		5AC1B30417E3C11A008154A5 /* SoundUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundUtil.m; sourceTree = "<group>"; };
+		5AC1B30617E3C133008154A5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		5AC1B30817E3C20B008154A5 /* countdown.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = countdown.aif; sourceTree = "<group>"; };
+		5AC1B30A17E3C39B008154A5 /* beep-old1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-old1.wav"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AC1B30717E3C133008154A5 /* AudioToolbox.framework in Frameworks */,
 				5AC1B2D917E3A623008154A5 /* Accelerate.framework in Frameworks */,
 				5AC1B2D717E34CFA008154A5 /* QuartzCore.framework in Frameworks */,
 				2CE8F0C517E2E893002D3FE7 /* CoreVideo.framework in Frameworks */,
@@ -128,7 +140,6 @@
 		2CE8F08917E2E779002D3FE7 = {
 			isa = PBXGroup;
 			children = (
-				5AC1B2D817E3A623008154A5 /* Accelerate.framework */,
 				2CE8F09B17E2E779002D3FE7 /* HeartBeatAnalyzer */,
 				2CE8F09417E2E779002D3FE7 /* Frameworks */,
 				2CE8F09317E2E779002D3FE7 /* Products */,
@@ -146,6 +157,8 @@
 		2CE8F09417E2E779002D3FE7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5AC1B30617E3C133008154A5 /* AudioToolbox.framework */,
+				5AC1B2D817E3A623008154A5 /* Accelerate.framework */,
 				5AC1B2D617E34CFA008154A5 /* QuartzCore.framework */,
 				2CE8F0C417E2E893002D3FE7 /* CoreVideo.framework */,
 				2CE8F0C217E2E889002D3FE7 /* CoreMedia.framework */,
@@ -171,6 +184,8 @@
 				2CE8F0BD17E2E7EB002D3FE7 /* SimpleChart.m */,
 				5AC1B26B17E309E9008154A5 /* HelpView.h */,
 				5AC1B26C17E309E9008154A5 /* HelpView.m */,
+				5AC1B30317E3C11A008154A5 /* SoundUtil.h */,
+				5AC1B30417E3C11A008154A5 /* SoundUtil.m */,
 				5AC1B2E317E3A7BC008154A5 /* RNFrostedSidebar.h */,
 				5AC1B2E417E3A7BD008154A5 /* RNFrostedSidebar.m */,
 				2CE8F0A417E2E779002D3FE7 /* AppDelegate.h */,
@@ -183,6 +198,9 @@
 		2CE8F09C17E2E779002D3FE7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5AC1B30817E3C20B008154A5 /* countdown.aif */,
+				5AC1B30A17E3C39B008154A5 /* beep-old1.wav */,
+				5AC1B30117E3C10A008154A5 /* beat.aif */,
 				2C216D4317E3BEF500F2664A /* history_bg@2x.png */,
 				5AC1B2DA17E3A728008154A5 /* menuImages */,
 				5AC1B27C17E334A4008154A5 /* heartImages */,
@@ -308,6 +326,9 @@
 				5AC1B2F517E3B8EC008154A5 /* star@2x.png in Resources */,
 				5AC1B2F717E3B8FB008154A5 /* globe@2x.png in Resources */,
 				2C216D4417E3BEF500F2664A /* history_bg@2x.png in Resources */,
+				5AC1B30217E3C10A008154A5 /* beat.aif in Resources */,
+				5AC1B30917E3C20B008154A5 /* countdown.aif in Resources */,
+				5AC1B30B17E3C39B008154A5 /* beep-old1.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +347,7 @@
 				2C216D3F17E3A91100F2664A /* HistoryTableViewCell.m in Sources */,
 				2C216D4217E3A93800F2664A /* HistoryTBViewController.m in Sources */,
 				5AC1B2E517E3A7BD008154A5 /* RNFrostedSidebar.m in Sources */,
+				5AC1B30517E3C11A008154A5 /* SoundUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

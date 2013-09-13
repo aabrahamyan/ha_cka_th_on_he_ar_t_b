@@ -9,6 +9,7 @@
 #import "SampleHeartRateAppViewController.h"
 #import "SimpleChart.h"
 #import "HelpView.h"
+#import "SoundUtil.h"
 
 #define HEART_ANIMATION 0.7
 
@@ -22,6 +23,7 @@
     CAShapeLayer *circleBG;
     CAShapeLayer *circle;
     UIImageView *grafImage;
+    SystemSoundID sound;
 }
 
 @synthesize simpleChart;
@@ -50,6 +52,8 @@
 - (void)viewDidLoad {
     
     self.optionIndices = [NSMutableIndexSet indexSetWithIndex:1];
+    
+    sound = [SoundUtil createAudio:@"beep-old1"];
     
     heartCounter = 1;
     previousHue = 0;
@@ -103,8 +107,6 @@
     heartImageView.animationDuration = HEART_ANIMATION;
     
     [self.view addSubview: heartImageView];
-    
-    [heartImageView startAnimating];
             
     // Set up the shape of the circle
     int radius = 120;
@@ -158,15 +160,15 @@
     [self.view addSubview:menuBtn];
     
     // ----------------------------- Heart Beat Animation --------------------------
-    UIView *grafContainer = [[UIImageView alloc] initWithFrame:CGRectMake(50, 290, 220, 40)];
-    grafContainer.layer.borderColor = [UIColor redColor].CGColor;
-    grafContainer.layer.borderWidth = 2.0f;
+    UIView *grafContainer = [[UIImageView alloc] initWithFrame:CGRectMake(55, 290, 210, 40)];
+    //grafContainer.layer.borderColor = [UIColor redColor].CGColor;
+    //grafContainer.layer.borderWidth = 2.0f;
     grafContainer.clipsToBounds = YES;
     
     [self.view addSubview: grafContainer];
     
     // ----------------------------- Graf ImageView --------------------------
-    grafImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 17, 1000, 6)];
+    grafImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 2700, 40)];
     grafImage.image = [UIImage imageNamed:@"line.png"];
     
     
@@ -261,6 +263,10 @@
 
 - (void)setProgressFrom {
     
+    [SoundUtil playAlertSound:sound];
+    [heartImageView startAnimating];
+    
+    
     // Configure animation
     CABasicAnimation *drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
 
@@ -286,11 +292,11 @@
 }
 
 - (void)startAnimatingGraf {
-    [UIView animateWithDuration:20
+    [UIView animateWithDuration:140
                           delay:0.0
                         options: UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         [grafImage setFrame:CGRectMake(-1000, 17, grafImage.frame.size.width, grafImage.frame.size.height)];
+                         [grafImage setFrame:CGRectMake(-2700, 0, grafImage.frame.size.width, grafImage.frame.size.height)];
                      }
                      completion:^(BOOL finished){
                          NSLog(@"Done!");
@@ -299,7 +305,8 @@
 
 
 - (void) startAnimatingHeart {
-    [heartImageView startAnimating];
+    
+    [self startAnimatingHeart];
     
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, HEART_ANIMATION * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
