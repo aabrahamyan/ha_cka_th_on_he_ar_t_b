@@ -185,51 +185,52 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v ) {
 	
 	RGBtoHSV(r, g, b, &h, &s, &v);
 	        
+    if(s >= 0.8999 && s <= 1.0000) {
     
-    
-	// simple highpass and lowpass filter - do not use this for anything important, it's rubbish...
-	static float lastH=0;
-    static float lastSat = 0;
-    static float lastVal = 0;
+        // simple highpass and lowpass filter - do not use this for anything important, it's rubbish...
+        static float lastH=0;
+        static float lastSat = 0;
+        static float lastVal = 0;
 
-	float highPassValue=h-lastH;
-    float satDifference = s - lastSat;
-    float valDifference = v - lastVal;
+        float highPassValue=h-lastH;
+        float satDifference = s - lastSat;
+        float valDifference = v - lastVal;
     
-    image = [self drawText:[@"" stringByAppendingFormat:@"HUE = %f, SAT=%f, VAL=%f, HUE_DIFF=%f, SAT_DIFF=%f, VAL_DIFF=%f", h, s, v,highPassValue,satDifference,valDifference] inImage:image atPoint:CGPointMake(10, 10)];
+        image = [self drawText:[@"" stringByAppendingFormat:@"HUE = %f, SAT=%f, VAL=%f, HUE_DIFF=%f, SAT_DIFF=%f, VAL_DIFF=%f", h, s, v,highPassValue,satDifference,valDifference] inImage:image atPoint:CGPointMake(10, 10)];
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    NSString *docs = [paths objectAtIndex:0];
-    NSString* path =  [docs stringByAppendingFormat:@"/image_%d.jpg",imageIndex];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        NSString *docs = [paths objectAtIndex:0];
+        NSString* path =  [docs stringByAppendingFormat:@"/image_%d.jpg",imageIndex];
     
-    NSData* imageData = [NSData dataWithData:UIImageJPEGRepresentation(image, 1.0)];
+        NSData* imageData = [NSData dataWithData:UIImageJPEGRepresentation(image, 1.0)];
     
     
-    NSError *writeError = nil;
-    [imageData writeToFile:path options:NSDataWritingAtomic error:&writeError];
+        NSError *writeError = nil;
+        [imageData writeToFile:path options:NSDataWritingAtomic error:&writeError];
     
-    if(writeError!=nil) {
-        NSLog(@"%@: Error saving image: %@", [self class], [writeError localizedDescription]);
-    }
+        if(writeError!=nil) {
+            NSLog(@"%@: Error saving image: %@", [self class], [writeError localizedDescription]);
+        }
 
     
-	lastH=h;
-    lastSat = s;
-    lastVal = v;
-	float lastHighPassValue=0;
-	float lowPassValue=(lastHighPassValue+highPassValue)/2;
-	lastHighPassValue=highPassValue;
+        lastH=h;
+        lastSat = s;
+        lastVal = v;
+        float lastHighPassValue=0;
+        float lowPassValue=(lastHighPassValue+highPassValue)/2;
+        lastHighPassValue=highPassValue;
 
 
-	// send the point to the chart to be displayed
-//	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
-    @autoreleasepool {
-        [simpleChart performSelectorOnMainThread:@selector(addPoint:) withObject:[NSNumber numberWithFloat:lowPassValue] waitUntilDone:NO]; 
-    }
+        // send the point to the chart to be displayed
+        //	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+        @autoreleasepool {
+            [simpleChart performSelectorOnMainThread:@selector(addPoint:) withObject:[NSNumber numberWithFloat:lowPassValue] waitUntilDone:NO];
+        }
 	
 
     
-    imageIndex++;
+        imageIndex++;
+    }
 
 
 }
