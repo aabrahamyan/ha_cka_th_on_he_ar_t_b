@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2C216D3C17E3A6E700F2664A /* history_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C216D3B17E3A6E700F2664A /* history_bg@2x.png */; };
 		2C216D3F17E3A91100F2664A /* HistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C216D3E17E3A91100F2664A /* HistoryTableViewCell.m */; };
 		2C216D4217E3A93800F2664A /* HistoryTBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C216D4117E3A93800F2664A /* HistoryTBViewController.m */; };
+		2C216D4417E3BEF500F2664A /* history_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C216D4317E3BEF500F2664A /* history_bg@2x.png */; };
 		2CE8F09617E2E779002D3FE7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CE8F09517E2E779002D3FE7 /* UIKit.framework */; };
 		2CE8F09817E2E779002D3FE7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CE8F09717E2E779002D3FE7 /* Foundation.framework */; };
 		2CE8F09A17E2E779002D3FE7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CE8F09917E2E779002D3FE7 /* CoreGraphics.framework */; };
@@ -52,11 +52,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2C216D3B17E3A6E700F2664A /* history_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "history_bg@2x.png"; path = "../../../../../../../../Users/armenabrahamyan/Downloads/history_bg@2x.png"; sourceTree = "<group>"; };
 		2C216D3D17E3A91100F2664A /* HistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewCell.h; sourceTree = "<group>"; };
 		2C216D3E17E3A91100F2664A /* HistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewCell.m; sourceTree = "<group>"; };
 		2C216D4017E3A93800F2664A /* HistoryTBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTBViewController.h; sourceTree = "<group>"; };
 		2C216D4117E3A93800F2664A /* HistoryTBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTBViewController.m; sourceTree = "<group>"; };
+		2C216D4317E3BEF500F2664A /* history_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "history_bg@2x.png"; sourceTree = "<group>"; };
 		2CE8F09217E2E779002D3FE7 /* HeartBeatAnalyzer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeartBeatAnalyzer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CE8F09517E2E779002D3FE7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2CE8F09717E2E779002D3FE7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -183,7 +183,7 @@
 		2CE8F09C17E2E779002D3FE7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				2C216D3B17E3A6E700F2664A /* history_bg@2x.png */,
+				2C216D4317E3BEF500F2664A /* history_bg@2x.png */,
 				5AC1B2DA17E3A728008154A5 /* menuImages */,
 				5AC1B27C17E334A4008154A5 /* heartImages */,
 				5AC1B27A17E32D42008154A5 /* ProximaNova-Light.otf */,
@@ -302,13 +302,12 @@
 				5AC1B2CF17E33DCA008154A5 /* 10.png in Resources */,
 				5AC1B2D017E33DCA008154A5 /* 11.png in Resources */,
 				5AC1B2D217E33E08008154A5 /* 1.png in Resources */,
-				2C216D3C17E3A6E700F2664A /* history_bg@2x.png in Resources */,
 				5AC1B2DF17E3A771008154A5 /* burger@2x.png in Resources */,
 				5AC1B2E717E3AB63008154A5 /* profile@2x.png in Resources */,
 				5AC1B2F417E3B8EC008154A5 /* gear@2x.png in Resources */,
 				5AC1B2F517E3B8EC008154A5 /* star@2x.png in Resources */,
 				5AC1B2F717E3B8FB008154A5 /* globe@2x.png in Resources */,
-
+				2C216D4417E3BEF500F2664A /* history_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
