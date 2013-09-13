@@ -59,12 +59,13 @@
     [self.view addSubview: bgImageView];
     
     // ----------------------------- BPM Count  --------------------------
-    bpmCount = [[UILabel alloc] initWithFrame:CGRectMake(76, 200, 150, 80)];
+    bpmCount = [[UILabel alloc] initWithFrame:CGRectMake(60 , 200, 130, 80)];
     bpmCount.textColor = [UIColor whiteColor];
     bpmCount.alpha = 0.8;
     bpmCount.backgroundColor = [UIColor clearColor];
-    [bpmCount setFont:[UIFont fontWithName:@"ProximaNova-Light" size:70.0]];
-    bpmCount.text = @"078";
+    [bpmCount setFont:[UIFont fontWithName:@"ProximaNova-Light" size:16.0]];
+   [bpmCount setTextAlignment:NSTextAlignmentRight];
+    bpmCount.text = @"Detecting Pulse...";
     
     [self.view addSubview: bpmCount];
     
@@ -417,8 +418,9 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v ) {
     }
     
     if(timerTimes >= 10) {
+        [bpmCount setFont:[UIFont fontWithName:@"ProximaNova-Light" size:70.0]];
         int x = (60 * heartCounter) / timerTimes;
-        heartRateLabel.text = [NSString stringWithFormat:@"%d", x];
+        bpmCount.text = [NSString stringWithFormat:@"%d", x];
     }
     
     timerTimes++;
