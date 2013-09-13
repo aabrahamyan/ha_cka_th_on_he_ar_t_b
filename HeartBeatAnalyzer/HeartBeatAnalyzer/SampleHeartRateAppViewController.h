@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import "RNFrostedSidebar.h"
 
 @class SimpleChart;
 
-@interface SampleHeartRateAppViewController : UIViewController<AVCaptureVideoDataOutputSampleBufferDelegate> {
+@interface SampleHeartRateAppViewController : UIViewController<AVCaptureVideoDataOutputSampleBufferDelegate, RNFrostedSidebarDelegate> {
 	AVCaptureSession *session;
 	SimpleChart *simpleChart;
     float previousHueDiff;
