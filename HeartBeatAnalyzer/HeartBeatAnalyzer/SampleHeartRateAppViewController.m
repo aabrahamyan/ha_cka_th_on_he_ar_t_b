@@ -12,7 +12,7 @@
 #import "SoundUtil.h"
 #import "HistoryTBViewController.h"
 
-#define HEART_ANIMATION 0.7
+#define HEART_ANIMATION 0.9
 
 @interface SampleHeartRateAppViewController ()
 @property (nonatomic, strong) NSMutableIndexSet *optionIndices;
@@ -20,7 +20,9 @@
 
 @implementation SampleHeartRateAppViewController {
     UILabel *bpmCount;
+    UILabel *bpmText;
     UIImageView *heartImageView;
+    UILabel *startLabel;
     CAShapeLayer *circleBG;
     CAShapeLayer *circle;
     UIImageView *grafImage;
@@ -79,17 +81,19 @@
     [bpmCount setFont:[UIFont fontWithName:@"ProximaNova-Light" size:16.0]];
    [bpmCount setTextAlignment:NSTextAlignmentRight];
     bpmCount.text = @"Detecting Pulse...";
+    bpmCount.hidden = YES;
     
     [self.view addSubview: bpmCount];
     
     // ----------------------------- BPM Text  --------------------------
-    UILabel *bpmText = [[UILabel alloc] initWithFrame:CGRectMake(200, 220, 120, 70)];
+    bpmText = [[UILabel alloc] initWithFrame:CGRectMake(200, 220, 120, 70)];
     bpmText.textColor = [UIColor whiteColor];
     bpmText.alpha = 0.8;
     bpmText.backgroundColor = [UIColor clearColor];
     [bpmText setFont:[UIFont fontWithName:@"ProximaNova-Light" size:16.0]];
     bpmText.font = [UIFont boldSystemFontOfSize: 16.0];
     bpmText.text = @"BPM";
+    bpmText.hidden = YES;
     
     [self.view addSubview: bpmText];
     
@@ -106,6 +110,7 @@
     heartImageView.image = [UIImage imageNamed:@"3.png"];
     heartImageView.animationImages = images;
     heartImageView.animationDuration = HEART_ANIMATION;
+    heartImageView.hidden = YES;
     
     [self.view addSubview: heartImageView];
             
@@ -172,10 +177,11 @@
     // ----------------------------- Graf ImageView --------------------------
     grafImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 2700, 40)];
     grafImage.image = [UIImage imageNamed:@"line.png"];
-    
+    grafImage.hidden = YES;
     
     [grafContainer addSubview: grafImage];
     
+<<<<<<< HEAD
     [self startAnimatingGraf];
     
     /*double p1 = 7.5;
@@ -207,7 +213,23 @@
         // [helpView showHelpView];
     });*/
     //---------------------------------------------------    
+
+    // ----------------------------- HELP VIEW --------------------------
+    //HelpView *helpView = [[HelpView alloc] initWithFrame: CGRectMake(0, 0, 320, 548)];
+    //[self.view addSubview: helpView];
     
+    startLabel = [[UILabel alloc] initWithFrame: CGRectMake(65, 240, 190, 60)];
+    startLabel.text = @"Place finger on camera lens";
+    startLabel.textColor = [UIColor whiteColor];
+    startLabel.alpha = 0.8;
+    startLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    startLabel.numberOfLines = 2;
+    startLabel.textAlignment = NSTextAlignmentCenter;
+    startLabel.backgroundColor = [UIColor clearColor];
+    [startLabel setFont:[UIFont fontWithName:@"ProximaNova-Light" size:26.0]];
+
+    
+    [self.view addSubview: startLabel];
     
     imageIndex = 0;
 
@@ -254,12 +276,42 @@
 	// Add the input and output
 	[session addInput:cameraInput];
 	[session addOutput:videoOutput];
-	
-	// Start the session
-	[session startRunning];		
+			
+    // Start the session
+	[session startRunning];
 }
 
-- (void)setProgressFrom {
+- (void) showCircle {
+    bpmCount.hidden = NO;
+    bpmText.hidden = NO;
+    heartImageView.hidden = NO;
+    grafImage.hidden = NO;
+    startLabel.hidden = YES;
+    
+    [self startAnimatingGraf];
+}
+
+- (void) hideCircle {
+    //[session stopRunning];
+    
+    bpmCount.hidden = YES;
+    bpmText.hidden = YES;
+    heartImageView.hidden = YES;
+    grafImage.hidden = YES;
+    startLabel.hidden = NO;
+    
+    circle.strokeEnd = 0;
+    [circle removeAllAnimations];
+    [grafImage.layer removeAllAnimations];
+    
+    [grafImage setFrame:CGRectMake(0, 0, grafImage.frame.size.width, grafImage.frame.size.height)];
+    
+    //[session startRunning];
+}
+
+- (void) setProgressFrom {
+    
+    [self showCircle];
     
     [SoundUtil playAlertSound:sound];
     [heartImageView startAnimating];
@@ -433,9 +485,15 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v ) {
         
         imageIndex++;
         globalCounter++;
-        NSLog(@"HAP");
+        //NSLog(@"HAP");
     } else {
-        NSLog(@"INVALIDATED = %@",timer);
+        //NSLog(@"INVALIDATED = %@",timer);
+        if (timer != nil) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self hideCircle];
+            });
+        }
+        
         [timer invalidate];
         timer = nil;
         timerDone = YES;
