@@ -172,8 +172,6 @@
     //grafContainer.layer.borderWidth = 2.0f;
     grafContainer.clipsToBounds = YES;
     
-    [self.view addSubview: grafContainer];
-    
     // ----------------------------- Graf ImageView --------------------------
     grafImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 2700, 40)];
     grafImage.image = [UIImage imageNamed:@"line.png"];
@@ -181,42 +179,8 @@
     
     [grafContainer addSubview: grafImage];
     
-<<<<<<< HEAD
-    [self startAnimatingGraf];
+    [self.view addSubview: grafContainer];
     
-    /*double p1 = 7.5;
-    dispatch_time_t progress1 = dispatch_time(DISPATCH_TIME_NOW, p1 * NSEC_PER_SEC);
-    dispatch_after(progress1, dispatch_get_main_queue(), ^(void){
-         [self setProgressFrom:0.0 to:0.4 andDuration:4.0];
-         
-    });*/
-    
-    /*double p2 = 12;
-    dispatch_time_t progress2 = dispatch_time(DISPATCH_TIME_NOW, p2 * NSEC_PER_SEC);
-    dispatch_after(progress2, dispatch_get_main_queue(), ^(void){
-        [self setProgressFrom:0.4 to:1.0 andDuration:6.0];
-    }); */
-    
-    
-    
-/*    double delayInSeconds = 6.5;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [helpView hideHelpView];
-    });
-    //---------------------------------------------------
-    
-    //--------------------------------------------------- TODO: TEST SHOW
-    double delayInSeconds2 = 8.5;
-    dispatch_time_t popTime2 = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds2 * NSEC_PER_SEC);
-    dispatch_after(popTime2, dispatch_get_main_queue(), ^(void){
-        // [helpView showHelpView];
-    });*/
-    //---------------------------------------------------    
-
-    // ----------------------------- HELP VIEW --------------------------
-    //HelpView *helpView = [[HelpView alloc] initWithFrame: CGRectMake(0, 0, 320, 548)];
-    //[self.view addSubview: helpView];
     
     startLabel = [[UILabel alloc] initWithFrame: CGRectMake(65, 240, 190, 60)];
     startLabel.text = @"Place finger on camera lens";
@@ -232,8 +196,26 @@
     [self.view addSubview: startLabel];
     
     imageIndex = 0;
+    
+    [self startSelfSession];
+}
 
-	// start capturing frames
+- (void) stopSelfSession {
+    [session stopRunning];
+    session = nil;
+    
+    heartCounter = 1;
+    previousHue = 0;
+    timerTimes = 1;
+    timerDone = NO;
+    globalCounter = 1;
+    previousSlope = 0;
+    
+    circleAnimationCounter = 0;
+}
+
+- (void) startSelfSession {
+    // start capturing frames
 	// Create the AVCapture Session
 	session = [[AVCaptureSession alloc] init];
 	
@@ -268,7 +250,7 @@
 	
 	// configure the pixel format
 	videoOutput.videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA], (id)kCVPixelBufferPixelFormatTypeKey,
-															 nil];
+                                 nil];
 	videoOutput.minFrameDuration=CMTimeMake(1, 10);
 	// and the size of the frames we want
 	[session setSessionPreset:AVCaptureSessionPresetLow];
@@ -276,7 +258,7 @@
 	// Add the input and output
 	[session addInput:cameraInput];
 	[session addOutput:videoOutput];
-			
+    
     // Start the session
 	[session startRunning];
 }
@@ -287,12 +269,13 @@
     heartImageView.hidden = NO;
     grafImage.hidden = NO;
     startLabel.hidden = YES;
+    bpmCount.text = @"Detecting Pulse...";
+    [bpmCount setFont:[UIFont fontWithName:@"ProximaNova-Light" size:16.0]];
     
     [self startAnimatingGraf];
 }
 
-- (void) hideCircle {
-    //[session stopRunning];
+- (void) hideCircle {    
     
     bpmCount.hidden = YES;
     bpmText.hidden = YES;
@@ -306,7 +289,9 @@
     
     [grafImage setFrame:CGRectMake(0, 0, grafImage.frame.size.width, grafImage.frame.size.height)];
     
-    //[session startRunning];
+    [self stopSelfSession];
+    
+
 }
 
 - (void) setProgressFrom {
@@ -492,6 +477,10 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v ) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self hideCircle];
             });
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self startSelfSession];
+            });
         }
         
         [timer invalidate];
@@ -524,7 +513,43 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v ) {
         [bpmCount setFont:[UIFont fontWithName:@"ProximaNova-Light" size:70.0]];
         int x = (60 * heartCounter) / timerTimes;
         bpmCount.text = [NSString stringWithFormat:@"%d", x];
+        
+        if(timerTimes == 20) {
+            NSString * decease = @"";
+            if(x < 60) {
+                decease = @"Possible brachycardia.";
+            } else if (x > 90) {
+                decease = @"Possible tachycardia.";
+            } else {
+                decease = @"No diseases"; 
+            }
+            
+            NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
+            [DateFormatter setDateFormat:@"EEE, dd MMM YYYY HH:mm:ss"];            
+            
+            NSMutableArray * storedArr = [[NSUserDefaults standardUserDefaults] objectForKey:@"heart_beats"];
+            if (!storedArr) {
+                 NSMutableArray * arr = [NSMutableArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:[@"" stringByAppendingFormat:@"%d",x], @"rate_result", [DateFormatter stringFromDate:[NSDate date]], @"date", decease, @"dcease", nil]];
+                [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"heart_beats"];
+            } else {                                
+                
+                NSMutableArray * mergedArr = [[NSMutableArray alloc] initWithArray:storedArr];
+                [mergedArr addObject:[NSDictionary dictionaryWithObjectsAndKeys:[@"" stringByAppendingFormat:@"%d",x], @"rate_result", [DateFormatter stringFromDate:[NSDate date]], @"date", decease, @"dcease", nil]];
+                
+//                NSArray * arita = [[mergedArr reverseObjectEnumerator] allObjects];
+                
+                [[NSUserDefaults standardUserDefaults] setObject:mergedArr forKey:@"heart_beats"];
+            }
+            
+            [self hideCircle];
+            [self startSelfSession];
+            
+            
+            [self createTableView];
+        }
     }
+    
+    
     
     timerTimes++;
     
@@ -564,6 +589,25 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v ) {
     [callout show];
 }
 
+- (void) createTableView {
+    if(!historyTBVC)
+        historyTBVC = [[HistoryTBViewController alloc] initWithStyle:UITableViewStylePlain];
+    
+    
+    historyTBVC.view.frame = CGRectMake(0, 568, 320, 548);
+    
+    [historyTBVC.tableView reloadData];
+    
+    [self.view addSubview:historyTBVC.view];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        historyTBVC.view.frame = CGRectMake(0, 0, 320, 548);
+    } completion:^(BOOL finished) {
+        [historyTBVC.tableView reloadData];
+    }];
+
+}
+
 #pragma mark - RNFrostedSidebarDelegate
 
 - (void)sidebar:(RNFrostedSidebar *)sidebar didTapItemAtIndex:(NSUInteger)index {
@@ -572,14 +616,8 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v ) {
         
     } else if (index == 1) {
         [sidebar dismiss];
-        historyTBVC = [[HistoryTBViewController alloc] initWithStyle:UITableViewStylePlain];
-        historyTBVC.view.frame = CGRectMake(0, 0, 278, 480);
         
-        [historyTBVC setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-       
-        [self presentViewController:historyTBVC animated:YES completion:^{
-            [historyTBVC.tableView reloadData];
-        }];
+        [self createTableView];
         
     } else if (index == 2) {
         // ----------------------------- HELP VIEW --------------------------

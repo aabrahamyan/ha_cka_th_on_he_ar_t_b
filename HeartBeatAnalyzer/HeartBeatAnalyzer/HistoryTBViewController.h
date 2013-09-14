@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HistoryTBViewController : UITableViewController<UITableViewDelegate> {
+@interface HistoryTBViewController : UITableViewController<UITableViewDelegate, UITableViewDataSource> {
 
     NSArray * data;
 }
