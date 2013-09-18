@@ -1,14 +1,3 @@
-//
-//  RNFrostedMenu.h
-//  RNFrostedMenu
-//
-//  Created by Ryan Nystrom on 8/13/13.
-//  Copyright (c) 2013 Ryan Nystrom. All rights reserved.
-//
-//  Original Dribbble shot by Jakub Antalik
-//  http://dribbble.com/shots/1194205-Sidebar-calendar-animation
-//
-
 #import <UIKit/UIKit.h>
 
 @class RNFrostedSidebar;

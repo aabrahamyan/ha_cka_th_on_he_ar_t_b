@@ -1,11 +1,3 @@
-//
-//  SimpleChart.m
-//  SampleHeartRateApp
-//
-//  Created by Chris Greening on 25/11/2010.
-//  Copyright 2010 CMG Research. All rights reserved.
-//
-
 #import "SimpleChart.h"
 
 

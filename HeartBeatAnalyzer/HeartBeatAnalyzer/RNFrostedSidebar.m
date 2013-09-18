@@ -1,11 +1,3 @@
-//
-//  RNFrostedMenu.m
-//  RNFrostedMenu
-//
-//  Created by Ryan Nystrom on 8/13/13.
-//  Copyright (c) 2013 Ryan Nystrom. All rights reserved.
-//
-
 #define __IPHONE_OS_VERSION_SOFT_MAX_REQUIRED __IPHONE_7_0
 
 #import "RNFrostedSidebar.h"
