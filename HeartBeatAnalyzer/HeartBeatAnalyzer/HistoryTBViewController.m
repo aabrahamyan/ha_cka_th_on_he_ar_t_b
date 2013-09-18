@@ -88,7 +88,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
+    data = [[NSUserDefaults standardUserDefaults] objectForKey:@"heart_beats"];
     return [data count];
 }
 
